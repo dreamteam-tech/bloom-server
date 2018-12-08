@@ -1,0 +1,13 @@
+production:
+  hosts:
+    prod:
+      ansible_port: "{{ lookup('env', 'PROD_DEPLOY_PORT') }}"
+      ansible_host: "{{ lookup('env', 'PROD_DEPLOY_HOST') }}"
+      ansible_user: "{{ lookup('env', 'PROD_DEPLOY_USER') }}"
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+    staging:
+      ansible_port: "{{ lookup('env', 'STAGING_DEPLOY_PORT') }}"
+      ansible_host: "{{ lookup('env', 'STAGING_DEPLOY_HOST') }}"
+      ansible_user: "{{ lookup('env', 'STAGING_DEPLOY_USER') }}"
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'

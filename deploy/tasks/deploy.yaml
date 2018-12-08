@@ -1,0 +1,49 @@
+---
+- name: Create project directory
+  file:
+    path: "{{ project_path }}"
+    state: "directory"
+    owner: "{{ ansible_user }}"
+
+- name: Check git repository exists
+  stat:
+    path: "{{ project_path }}/.git"
+  register: has_git
+
+- name: Git reset hard HEAD
+  command: git reset --hard origin/master
+  args:
+    chdir: "{{ project_path }}"
+  when: has_git.stat.exists
+
+- name: Fetch git changes
+  git:
+    repo: '{{ git_repository }}'
+    dest: "{{ project_path }}"
+    version: '{{ git_branch }}'
+    accept_hostkey: yes
+
+- name: Install dependencies based on package.json.
+  npm:
+    path: "{{ project_path }}"
+    production: yes
+
+- name: Generate env file
+  copy:
+    dest: "{{ project_path }}/.env"
+    content: |
+      {% for key, value in app_vars.items() %}
+      {{ key|upper }}={{ value }}
+      {% endfor %}
+
+- name: Migrate
+  shell: 'npm run sequelize db:migrate'
+  args:
+    chdir: '{{ project_path }}'
+
+# https://gist.github.com/nanobeep/3b3d614a709086ff832a
+- name: Restart service
+  shell: "sh -c 'sudo systemctl restart {{ ansible_user }}'"
+  become: yes
+  become_user: "{{ ansible_user }}"
+  become_method: sudo

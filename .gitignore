@@ -1,0 +1,10 @@
+/node_modules
+/coverage
+*.log
+*.sqlite
+.idea
+*.pyc
+/.env
+/.env.test
+.DS_Store
+/public/media

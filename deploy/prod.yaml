@@ -1,0 +1,18 @@
+---
+- hosts: prod
+  vars:
+    project_path: "/home/{{ ansible_user }}/backend"
+    git_repository: "git@gitlab.com:blockchaincorp/ic/ic-customer/crypto-casino-backend.git"
+    git_branch: 'master'
+    app_vars:
+      NODE_ENV: "production"
+      APP_RELEASE: "{{ lookup('env', 'PROD_APP_RELEASE') }}"
+      JWT_SECRET: "{{ lookup('env', 'PROD_JWT_SECRET') }}"
+      SENTRY_DSN: "{{ lookup('env', 'PROD_SENTRY_DSN') }}"
+      RDS_USERNAME: "{{ lookup('env', 'PROD_RDS_USERNAME') }}"
+      RDS_PASSWORD: "{{ lookup('env', 'PROD_RDS_PASSWORD') }}"
+      RDS_DB_NAME: "{{ lookup('env', 'PROD_RDS_DB_NAME') }}"
+      RDS_HOSTNAME: "{{ lookup('env', 'PROD_RDS_HOSTNAME') }}"
+      RDS_PORT: "{{ lookup('env', 'PROD_RDS_PORT') }}"
+  tasks:
+    - include_tasks: tasks/deploy.yaml
