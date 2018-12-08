@@ -29,6 +29,6 @@ demo: db_drop db_create migrate seed
 test:
 	npm run test
 
-.PHONY: server
+.PHONY: deploy
 deploy:
 	ansible-playbook -i deploy/inventory.yaml deploy/prod.yaml
