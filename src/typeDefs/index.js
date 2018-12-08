@@ -4,6 +4,7 @@ module.exports = [
   require('./jwt'),
   require('./root'),
   require('./strategy'),
+  require('./transaction'),
   require('./types'),
   require('./user'),
 ];

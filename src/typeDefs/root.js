@@ -9,6 +9,10 @@ module.exports = gql`
     # Strategies
     strategies: [Strategy!]
     strategy(id: ID!): [Strategy!]
+    
+    transactions(strategy_id: ID!): [Transaction!]
+    transaction(id: ID!): Transaction!
+    transactionChart(strategy_id: ID!): [ChartLine!]
 
     # Users
     users: [User!] @auth
@@ -30,5 +34,10 @@ module.exports = gql`
     strategyCreate(name: String, description: String, percent: Float): Strategy! @auth
     strategyUpdate(id: ID!, name: String, description: String, percent: Float): Strategy! @auth
     strategyRemove(id: ID!): Boolean! @auth
+    
+    # Transaction
+    transactionCreate(amount: Float, user_id: ID, strategy_id: ID): Transaction!
+    transactionUpdate(id: ID!, amount: Float, user_id: ID, strategy_id: ID): Transaction!
+    transactionRemove(id: ID!): Boolean!
   }
 `;

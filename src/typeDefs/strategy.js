@@ -7,5 +7,6 @@ module.exports = gql`
     description: String!
     percent: Float!
     companies: [Company!]
+    transactions: [Transaction]
   }
 `;
