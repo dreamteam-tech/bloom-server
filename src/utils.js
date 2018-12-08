@@ -18,7 +18,7 @@ module.exports = {
 
   jwtVerify(token) {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, config.jwt.secret, (err, decodedToken) => {
+      jwt.verify(token, config.jwt_secret, (err, decodedToken) => {
         if (err || !decodedToken) {
           return reject(err);
         }
@@ -56,7 +56,7 @@ module.exports = {
   },
 
   sign(data, expireInHours = 1) {
-    return jwt.sign(data, config.jwt.secret, {
+    return jwt.sign(data, config.jwt_secret, {
       expiresIn: Math.floor(Date.now() / 1000) + 60 * (60 * expireInHours)
     });
   },
