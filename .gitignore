@@ -8,3 +8,4 @@
 /.env.test
 .DS_Store
 /public/media
+/deploy
