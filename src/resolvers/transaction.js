@@ -6,11 +6,17 @@ const models = require('../models');
 module.exports = {
   Query: {
     transactions: async (root, args, context, info) => {
+      let where = {
+        // user_id: context.currentUser.id
+      };
+
+      if (args.strategy_id) {
+        where = { strategy_id: args.strategy_id };
+      }
+
       return await models.Transaction.findAll({
-        where: {
-          strategy_id: args.strategy_id
-          // user_id: context.currentUser.id
-        },
+        where,
+        raw: true,
         order: [['id', 'DESC']]
       });
     },
@@ -55,6 +61,11 @@ module.exports = {
           strategy_id: args.strategy_id
         }
       });
+    }
+  },
+  Transaction: {
+    strategy: async (root, args, context, info) => {
+      return await models.Strategy.findByPk(root.strategy_id);
     }
   },
   Mutation: {

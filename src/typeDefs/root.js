@@ -5,12 +5,16 @@ module.exports = gql`
     hello: String!
 
     me: User! @auth
+    
+    # Dashboard
+    dashboard: [Dashboard!]
 
     # Strategies
     strategies: [Strategy!]
     strategy(id: ID!): [Strategy!]
     
-    transactions(strategy_id: ID!): [Transaction!]
+    # Transactions
+    transactions(strategy_id: ID): [Transaction!]
     transaction(id: ID!): Transaction!
     transactionChart(strategy_id: ID!): [ChartLine!]
 
@@ -31,8 +35,8 @@ module.exports = gql`
     changePassword(password: String, password_confirm: String): Boolean!
 
     # Strategy
-    strategyCreate(name: String, description: String, percent: Float): Strategy! @auth
-    strategyUpdate(id: ID!, name: String, description: String, percent: Float): Strategy! @auth
+    strategyCreate(name: String, color: String, description: String, percent: Float): Strategy! @auth
+    strategyUpdate(id: ID!, color: String, name: String, description: String, percent: Float): Strategy! @auth
     strategyRemove(id: ID!): Boolean! @auth
     
     # Transaction

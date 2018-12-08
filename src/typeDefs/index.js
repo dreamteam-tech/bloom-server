@@ -3,6 +3,7 @@ module.exports = [
   require('./directives'),
   require('./jwt'),
   require('./root'),
+  require('./dashboard'),
   require('./strategy'),
   require('./transaction'),
   require('./types'),

@@ -5,6 +5,8 @@ module.exports = gql`
     id: ID!
     name: String!
     description: String!
+    color: String!
+    has_investments: Boolean!
     percent: Float!
     companies: [Company!]
     transactions: [Transaction]

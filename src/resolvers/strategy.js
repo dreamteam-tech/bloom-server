@@ -6,12 +6,35 @@ const models = require('../models');
 module.exports = {
   Query: {
     strategies: async (root, args, context, info) => {
-      return await models.Strategy.findAll({
+      const strategies = await models.Strategy.findAll({
+        raw: true,
         order: [['id', 'DESC']]
       });
+
+      const result = [];
+      for (let i = 0; i < strategies.length; i++) {
+        const strategy = strategies[i];
+        result.push({
+          ...strategy,
+          has_investments: await models.Transaction.count({
+            where: { strategy_id: strategy.id }
+          }) > 0
+        });
+      }
+
+      return result;
     },
     strategy: async (root, args, context, info) => {
-      return await models.Strategy.findByPk(args.id);
+      const strategy = await models.Strategy.findByPk(args.id, {
+        raw: true
+      });
+
+      return {
+        ...strategy,
+        has_investments: await models.Transaction.count({
+          where: { strategy_id: strategy.id }
+        }) > 0
+      }
     }
   },
   Mutation: {

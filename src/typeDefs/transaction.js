@@ -5,6 +5,8 @@ module.exports = gql`
     id: ID!
     amount: Float!
     user: User!
+    type: Int!
+    strategy_id: Int!
     strategy: Strategy!
     created_at: Date!
     updated_at: Date!
