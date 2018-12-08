@@ -22,7 +22,10 @@ module.exports = {
         percent: Joi.number().required(),
       });
 
-      return await models.Strategy.create(value);
+      return await models.Strategy.create({
+        ...value,
+        author_id: context.currentUser.id
+      });
     },
     strategyUpdate: async (root, args, context, info) => {
       const value = utils.validate(args, {
