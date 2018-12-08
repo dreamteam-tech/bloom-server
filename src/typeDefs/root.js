@@ -22,7 +22,7 @@ module.exports = gql`
     restore(phone: String): ID
     restoreCheck(token: String): Boolean
     restoreConfirm(token: String, password: String, password_confirm: String): Jwt!
-    registration(phone: String, password: String, password_confirm: String): ID
+    registration(phone: String, password: String, password_confirm: String): User!
     registrationConfirm(token: String): Jwt!
     changePassword(password: String, password_confirm: String): Boolean!
 

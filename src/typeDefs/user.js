@@ -4,6 +4,7 @@ module.exports = gql`
   type User {
     id: ID!
     phone: String!
+    token: String
     is_active: Boolean!
     created_at: Date!
     updated_at: Date!

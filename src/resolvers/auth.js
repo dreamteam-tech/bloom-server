@@ -113,7 +113,7 @@ module.exports = {
 
       // TODO sms.send(user.phone);
 
-      return user.id;
+      return user;
     },
     /**
      * Подтверждение регистрации
