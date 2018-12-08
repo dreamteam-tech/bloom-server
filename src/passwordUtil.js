@@ -9,7 +9,7 @@ module.exports = {
    * @returns {string}
    */
   hash(password) {
-    return bcrypt.hash(password, config.security.rounds);
+    return bcrypt.hash(password, config.bcrypt_rounds);
   },
 
   /**
