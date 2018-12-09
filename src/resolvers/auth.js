@@ -85,6 +85,8 @@ module.exports = {
      */
     registration: async (root, args, context, info) => {
       const value = utils.validate(args, {
+        first_name: Joi.string().required(),
+        last_name: Joi.string().required(),
         phone: Joi.string().required(),
         password: Joi.string().min(6).max(50).required(),
         password_confirm: Joi.string().min(6).max(50).required().valid(Joi.ref('password')).options({
@@ -106,6 +108,8 @@ module.exports = {
       }
 
       const user = await models.User.create({
+        first_name: value.first_name,
+        last_name: value.last_name,
         phone: value.phone.toLowerCase(),
         password: await passwordUtil.hash(value.password),
         token: passwordUtil.token()

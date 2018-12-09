@@ -30,7 +30,7 @@ module.exports = gql`
     restore(phone: String): ID
     restoreCheck(token: String): Boolean
     restoreConfirm(token: String, password: String, password_confirm: String): Jwt!
-    registration(phone: String, password: String, password_confirm: String): User!
+    registration(first_name: String, last_name: String, phone: String, password: String, password_confirm: String): User!
     registrationConfirm(token: String): Jwt!
     changePassword(password: String, password_confirm: String): Boolean!
     registrationVkontakte(first_name: String, last_name: String, vk_id: ID): Jwt!
