@@ -7,11 +7,11 @@ module.exports = gql`
     me: User! @auth
     
     # Dashboard
-    dashboard: [Dashboard!]
+    dashboard: [Dashboard!] @auth
 
     # Strategies
-    strategies: [Strategy!]
-    strategy(id: ID!): Strategy!
+    strategies: [Strategy!] @auth
+    strategy(id: ID!): Strategy! @auth
     
     # Transactions
     transactions(strategy_id: ID): [Transaction!]
@@ -19,8 +19,8 @@ module.exports = gql`
     transactionChart(strategy_id: ID!): [ChartLine!]
 
     # Users
-    users: [User!]
-    user(id: ID!): User!
+    users: [User!] @auth
+    user(id: ID!): User! @auth
   }
 
   type Mutation {
@@ -36,13 +36,13 @@ module.exports = gql`
     registrationVkontakte(first_name: String, last_name: String, vk_id: ID): Jwt!
 
     # Strategy
-    strategyCreate(name: String, color: String, description: String, percent: Float): Strategy!
-    strategyUpdate(id: ID!, color: String, name: String, description: String, percent: Float): Strategy!
-    strategyRemove(id: ID!): Boolean!
+    strategyCreate(name: String, color: String, description: String, percent: Float): Strategy! @auth
+    strategyUpdate(id: ID!, color: String, name: String, description: String, percent: Float): Strategy! @auth
+    strategyRemove(id: ID!): Boolean! @auth
     
     # Transaction
-    transactionCreate(amount: Float, user_id: ID, strategy_id: ID): Transaction!
-    transactionUpdate(id: ID!, amount: Float, user_id: ID, strategy_id: ID): Transaction!
-    transactionRemove(id: ID!): Boolean!
+    transactionCreate(amount: Float, user_id: ID, strategy_id: ID): Transaction! @auth
+    transactionUpdate(id: ID!, amount: Float, user_id: ID, strategy_id: ID): Transaction! @auth
+    transactionRemove(id: ID!): Boolean! @auth
   }
 `;
