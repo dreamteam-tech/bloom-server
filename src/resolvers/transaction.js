@@ -75,12 +75,13 @@ module.exports = {
     },
     transactionWithdraw: async (root, args, context, info) => {
       const value = utils.validate(args, {
-        amount: Joi.number().required(),
+        amount: Joi.number().positive().required(),
         strategy_id: Joi.number().integer().positive().required()
       });
 
       return await models.Transaction.create({
-        ...value,
+        amount: -value.amount,
+        strategy_id: value.strategy_id,
         is_confirmed: false,
         user_id: context.currentUser.id
       });
