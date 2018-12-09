@@ -6,6 +6,7 @@ module.exports = gql`
     amount: Float!
     user: User!
     type: Int!
+    is_confirmed: Boolean!
     strategy_id: Int!
     strategy: Strategy!
     created_at: Date!
