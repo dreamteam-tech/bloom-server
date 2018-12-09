@@ -45,10 +45,33 @@ module.exports = {
     }
   },
   Mutation: {
+    transactionConfirm: async (root, args, context, info) => {
+      const transaction = await models.Transaction.findByPk(args.id);
+      if (null === transaction) {
+        throw new JoiError({ id: ['not found'] });
+      }
+
+      return await transaction.update({
+        is_confirmed: true
+      });
+    },
+    transactionWithdraw: async (root, args, context, info) => {
+      const value = utils.validate(args, {
+        amount: Joi.number().required(),
+        strategy_id: Joi.number().integer().positive().required()
+      });
+
+      return await models.Transaction.create({
+        ...value,
+        is_confirmed: false,
+        user_id: context.currentUser.id
+      });
+    },
     transactionCreate: async (root, args, context, info) => {
       const value = utils.validate(args, {
         amount: Joi.number().required(),
-        user_id: Joi.number().integer().positive().required()
+        user_id: Joi.number().integer().positive().required(),
+        strategy_id: Joi.number().integer().positive().required()
       });
 
       return await models.Transaction.create(value);
@@ -56,7 +79,8 @@ module.exports = {
     transactionUpdate: async (root, args, context, info) => {
       const value = utils.validate(args, {
         amount: Joi.number().allow('', null),
-        user_id: Joi.number().integer().positive().allow('', null)
+        user_id: Joi.number().integer().positive().allow('', null),
+        strategy_id: Joi.number().integer().positive().required()
       });
 
       const transaction = await models.Transaction.findByPk(args.id);

@@ -8,6 +8,7 @@ module.exports = gql`
     phone: String
     token: String
     vk_id: Int
+    is_admin: Boolean!
     is_active: Boolean!
     created_at: Date!
     updated_at: Date!

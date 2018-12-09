@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Transaction = sequelize.define('Transaction', {
     amount: { type: DataTypes.DOUBLE, allowNull: false },
+    is_confirmed: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
     type: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
   }, {
     tableName: 'transaction',
