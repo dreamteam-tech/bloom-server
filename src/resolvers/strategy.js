@@ -17,7 +17,10 @@ module.exports = {
         result.push({
           ...strategy,
           has_investments: await models.Transaction.count({
-            where: { strategy_id: strategy.id }
+            where: {
+              strategy_id: strategy.id,
+              user_id: context.currentUser.id
+            }
           }) > 0
         });
       }
@@ -32,7 +35,10 @@ module.exports = {
       return {
         ...strategy,
         has_investments: await models.Transaction.count({
-          where: { strategy_id: strategy.id }
+          where: {
+            strategy_id: strategy.id,
+            user_id: context.currentUser.id
+          }
         }) > 0
       }
     }
@@ -53,7 +59,10 @@ module.exports = {
         percent: Joi.number().required(),
       });
 
-      return await models.Strategy.create(value);
+      return await models.Strategy.create({
+        ...value,
+        author_id: context.currentUser.id
+      });
     },
     strategyUpdate: async (root, args, context, info) => {
       const value = utils.validate(args, {

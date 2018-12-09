@@ -1,6 +1,3 @@
-const Joi = require('joi');
-const { JoiError } = require('../errors');
-const utils = require('../utils');
 const models = require('../models');
 const consts = require('../consts');
 const chartService = require('../service/chart');
@@ -19,19 +16,19 @@ module.exports = {
           strategy,
           amount: await models.Transaction.sum('amount', {
             where: {
-              // user_id: context.currentUser.id,
+              user_id: context.currentUser.id,
               strategy_id: strategy.id
             }
           }) || 0,
           invested: await models.Transaction.sum('amount', {
             where: {
               type: consts.TRANSACTION_PAYMENT,
-              // user_id: context.currentUser.id,
+              user_id: context.currentUser.id,
               strategy_id: strategy.id
             }
           }) || 0,
           chart: await chartService.getSummaryChart({
-            // user_id: context.currentUser.id,
+            user_id: context.currentUser.id,
             strategy_id: strategy.id
           })
         });
