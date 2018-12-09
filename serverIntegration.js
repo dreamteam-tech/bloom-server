@@ -31,7 +31,7 @@ app.post('/vk', async (req, res) => {
       const strategy = await models.Strategy.findByPk(req.body.object.description);
       await models.Transaction.create({
         strategy_id: strategy.id,
-        amount: req.body.object.amount
+        amount: req.body.object.amount / 1000
       });
       return res.send('');
 

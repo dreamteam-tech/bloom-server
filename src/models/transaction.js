@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Transaction.associate = models => {
     Transaction.belongsTo(models.User, {
       as: 'user',
+      allowNull: true,
       foreignKey: 'user_id'
     });
     Transaction.belongsTo(models.Strategy, {
