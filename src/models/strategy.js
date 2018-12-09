@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     description: { type: DataTypes.TEXT, allowNull: false },
     percent: { type: DataTypes.DOUBLE, allowNull: false },
     color: { type: DataTypes.STRING, allowNull: false, defaultValue: '#ccc' },
-    position: { type: DataTypes.INT, allowNull: false, defaultValue: 0 }
+    position: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
   }, {
     tableName: 'strategy',
     timestamps: true
