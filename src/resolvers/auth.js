@@ -143,7 +143,7 @@ module.exports = {
         });
       }
 
-      return utils.signUser(user);
+      return getAuthorizationPayload(user);
     },
     /**
      * Подтверждение регистрации
