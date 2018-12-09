@@ -13,11 +13,9 @@ module.exports = {
       select to_char(d, 'YYYY-MM') as date, COALESCE(sum("b"."amount"), 0) as value
       from generate_series(date('now') - interval '1 year', date('now'), interval '1 day') d
              left join lateral (
-          select "b"."amount"
+          select sum("b"."amount")
           from "transaction" "b"
-          where
-            date("b"."created_at") = d
-            and "b"."strategy_id" = :strategy_id
+          where date("b"."created_at") <= d and "b"."strategy_id" = :strategy_id
           group by "b"."amount"
           ) b ON true
       group by date
