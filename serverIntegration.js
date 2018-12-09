@@ -1,8 +1,12 @@
 const express = require('express');
 require('express-async-errors');
-const app = express();
+const bodyParser = require('body-parser');
 const models = require('./src/models');
 const appConfig = require('./src/config/app');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/vk', async (req, res) => {
   const {
