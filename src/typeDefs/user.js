@@ -5,7 +5,7 @@ module.exports = gql`
     id: ID!
     first_name: String!
     last_name: String!
-    phone: String!
+    phone: String
     token: String
     vk_id: Int
     is_active: Boolean!
