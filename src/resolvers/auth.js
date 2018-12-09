@@ -131,19 +131,19 @@ module.exports = {
         vk_id: Joi.number().integer().positive().required()
       });
 
-      const user = await models.User.findOne({
+      let user = await models.User.findOne({
         where: { vk_id: value.vk_id }
       });
-      if (user) {
-        return user;
+      if (null === user) {
+        user = await models.User.create({
+          first_name: value.first_name,
+          last_name: value.last_name,
+          vk_id: value.vk_id,
+          is_active: true,
+        });
       }
 
-      return await models.User.create({
-        first_name: value.first_name,
-        last_name: value.last_name,
-        vk_id: value.vk_id,
-        is_active: true,
-      });
+      return utils.signUser(user);
     },
     /**
      * Подтверждение регистрации
