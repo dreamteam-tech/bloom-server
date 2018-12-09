@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server.js",
+    "start": "nodemon ./serverApollo.js",
     "sequelize": "./node_modules/.bin/sequelize",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
     "test-coverage": "NODE_ENV=test jest --coverage --detectOpenHandles"

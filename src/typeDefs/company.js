@@ -6,4 +6,10 @@ module.exports = gql`
     name: String!
     description: String!
   }
+
+  type StrategyCompany {
+    strategy: Strategy!
+    percent: Float!
+    company: Company!
+  }
 `;

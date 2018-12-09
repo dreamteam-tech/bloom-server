@@ -11,7 +11,7 @@ module.exports = gql`
 
     # Strategies
     strategies: [Strategy!]
-    strategy(id: ID!): [Strategy!]
+    strategy(id: ID!): Strategy!
     
     # Transactions
     transactions(strategy_id: ID): [Transaction!]
@@ -35,9 +35,9 @@ module.exports = gql`
     changePassword(password: String, password_confirm: String): Boolean!
 
     # Strategy
-    strategyCreate(name: String, color: String, description: String, percent: Float): Strategy! @auth
-    strategyUpdate(id: ID!, color: String, name: String, description: String, percent: Float): Strategy! @auth
-    strategyRemove(id: ID!): Boolean! @auth
+    strategyCreate(name: String, color: String, description: String, percent: Float): Strategy!
+    strategyUpdate(id: ID!, color: String, name: String, description: String, percent: Float): Strategy!
+    strategyRemove(id: ID!): Boolean!
     
     # Transaction
     transactionCreate(amount: Float, user_id: ID, strategy_id: ID): Transaction!

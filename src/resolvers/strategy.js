@@ -37,6 +37,14 @@ module.exports = {
       }
     }
   },
+  Strategy: {
+    companies: async (root, args, context, info) => {
+      return await models.StrategyCompany.findAll({
+        where: { strategy_id: root.id },
+        raw: true
+      });
+    }
+  },
   Mutation: {
     strategyCreate: async (root, args, context, info) => {
       const value = utils.validate(args, {
@@ -45,10 +53,7 @@ module.exports = {
         percent: Joi.number().required(),
       });
 
-      return await models.Strategy.create({
-        ...value,
-        author_id: context.currentUser.id
-      });
+      return await models.Strategy.create(value);
     },
     strategyUpdate: async (root, args, context, info) => {
       const value = utils.validate(args, {

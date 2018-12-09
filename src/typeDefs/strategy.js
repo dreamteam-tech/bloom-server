@@ -8,7 +8,7 @@ module.exports = gql`
     color: String!
     has_investments: Boolean!
     percent: Float!
-    companies: [Company!]
+    companies: [StrategyCompany!]
     transactions: [Transaction]
   }
 `;

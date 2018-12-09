@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const StrategyCompany = sequelize.define('StrategyCompany', {
+    percent: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
   }, {
     tableName: 'strategy_company'
   });
