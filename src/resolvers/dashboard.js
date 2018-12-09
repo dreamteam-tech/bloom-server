@@ -55,7 +55,7 @@ module.exports = {
 
         const percent = calc(amount, invested);
 
-        const chart = await chartService.getSummaryChart({
+        const chart = await chartService.getChart({
           user_id: context.currentUser.id,
           strategy_id: strategy.id
         });
