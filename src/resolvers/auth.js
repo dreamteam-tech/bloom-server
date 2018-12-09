@@ -139,10 +139,13 @@ module.exports = {
           first_name: value.first_name,
           last_name: value.last_name,
           vk_id: value.vk_id,
-          is_active: true,
-          refresh_token: utils.signRefreshToken(user)
+          is_active: true
         });
       }
+
+      await user.update({
+        refresh_token: utils.signRefreshToken(user)
+      });
 
       return getAuthorizationPayload(user);
     },
