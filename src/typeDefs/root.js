@@ -15,6 +15,7 @@ module.exports = gql`
     
     # Transactions
     transactions(strategy_id: ID): [Transaction!] @auth
+    transactionsAll: [Transaction!] @auth
     transaction(id: ID!): Transaction! @auth
     transactionChart(strategy_id: ID!): [ChartLine!] @auth
 

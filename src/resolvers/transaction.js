@@ -7,14 +7,9 @@ const models = require('../models');
 module.exports = {
   Query: {
     transactions: async (root, args, context, info) => {
-      let where = {};
-
-      if (!context.currentUser.is_admin) {
-        where = {
-          ...where,
-          user_id: context.currentUser.id
-        };
-      }
+      let where = {
+        user_id: context.currentUser.id
+      };
 
       if (args.strategy_id) {
         where = {
@@ -25,6 +20,12 @@ module.exports = {
 
       return await models.Transaction.findAll({
         where,
+        raw: true,
+        order: [['id', 'DESC']]
+      });
+    },
+    transactionsAll: async (root, args, context, info) => {
+      return await models.Transaction.findAll({
         raw: true,
         order: [['id', 'DESC']]
       });
@@ -46,7 +47,10 @@ module.exports = {
   },
   Transaction: {
     strategy: async (root, args, context, info) => {
-      return await models.Strategy.findByPk(root.strategy_id);
+      return await models.Strategy.findByPk(root.strategy_id, { raw: true });
+    },
+    user: async (root, args, context, info) => {
+      return await models.User.findByPk(root.user_id, { raw: true });
     }
   },
   Mutation: {
