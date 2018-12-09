@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     is_trader: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
     first_name: { type: DataTypes.STRING, allowNull: false },
     last_name: { type: DataTypes.STRING, allowNull: false },
-    phone: { type: DataTypes.STRING, allowNull: false },
+    phone: { type: DataTypes.STRING, allowNull: true },
     token: { type: DataTypes.STRING, allowNull: true },
     refresh_token: { type: DataTypes.STRING, allowNull: true },
     password: { type: DataTypes.STRING, allowNull: true },
