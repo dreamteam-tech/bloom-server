@@ -42,7 +42,7 @@ module.exports = gql`
     strategyRemove(id: ID!): Boolean! @auth
     
     # Transaction
-    transactionConfirm(id: ID): Transaction! @auth
+    transactionConfirm(id: ID!): Transaction! @auth
     transactionWithdraw(amount: Float, strategy_id: ID): Transaction! @auth
     transactionCreate(amount: Float, user_id: ID, strategy_id: ID): Transaction! @auth
     transactionUpdate(id: ID!, amount: Float, user_id: ID, strategy_id: ID): Transaction! @auth
