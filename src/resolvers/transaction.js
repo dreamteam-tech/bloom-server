@@ -49,8 +49,7 @@ module.exports = {
       }
     },
     transactionChart: async (root, args, context, info) => {
-      return await chartService.getChart({
-        user_id: context.currentUser.id,
+      return await chartService.getSummaryChart({
         strategy_id: args.strategy_id
       });
     }
