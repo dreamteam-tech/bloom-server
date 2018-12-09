@@ -3,6 +3,7 @@ const { JoiError } = require('../errors');
 const utils = require('../utils');
 const chartService = require('../service/chart');
 const models = require('../models');
+const consts = require('../consts');
 
 module.exports = {
   Query: {
@@ -81,6 +82,7 @@ module.exports = {
 
       return await models.Transaction.create({
         amount: -value.amount,
+        type: consts.TRANSACTION_WITHDRAW,
         strategy_id: value.strategy_id,
         is_confirmed: false,
         user_id: context.currentUser.id
