@@ -31,12 +31,21 @@ module.exports = {
       });
     },
     transaction: async (root, args, context, info) => {
-      return await models.Transaction.findOne({
-        where: {
-          id: args.id,
-          user_id: context.currentUser.id
-        }
-      });
+      const user = context.currentUser;
+
+      if (user.is_admin) {
+        return await models.Transaction.findByPk(args.id, {
+          raw: true
+        });
+      } else {
+        return await models.Transaction.findOne({
+          where: {
+            id: args.id,
+            user_id: context.currentUser.id
+          },
+          raw: true
+        });
+      }
     },
     transactionChart: async (root, args, context, info) => {
       return await chartService.getChart({
