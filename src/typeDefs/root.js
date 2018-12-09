@@ -19,8 +19,8 @@ module.exports = gql`
     transactionChart(strategy_id: ID!): [ChartLine!]
 
     # Users
-    users: [User!] @auth
-    user(id: ID!): User! @auth
+    users: [User!]
+    user(id: ID!): User!
   }
 
   type Mutation {
@@ -33,6 +33,7 @@ module.exports = gql`
     registration(phone: String, password: String, password_confirm: String): User!
     registrationConfirm(token: String): Jwt!
     changePassword(password: String, password_confirm: String): Boolean!
+    registrationVkontakte(first_name: String, last_name: String, vk_id: ID): Jwt!
 
     # Strategy
     strategyCreate(name: String, color: String, description: String, percent: Float): Strategy!

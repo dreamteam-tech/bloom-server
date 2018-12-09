@@ -116,6 +116,36 @@ module.exports = {
       return user;
     },
     /**
+     * Регистрация
+     *
+     * @param root
+     * @param args
+     * @param context
+     * @param info
+     * @returns {Promise<user.id|{allowNull, autoIncrement, primaryKey, type}>}
+     */
+    registrationVkontakte: async (root, args, context, info) => {
+      const value = utils.validate(args, {
+        first_name: Joi.string().required(),
+        last_name: Joi.string().required(),
+        vk_id: Joi.number().integer().positive().required()
+      });
+
+      const user = await models.User.findOne({
+        where: { vk_id: value.vk_id }
+      });
+      if (user) {
+        return user;
+      }
+
+      return await models.User.create({
+        first_name: value.first_name,
+        last_name: value.last_name,
+        vk_id: value.vk_id,
+        is_active: true,
+      });
+    },
+    /**
      * Подтверждение регистрации
      *
      * @param root

@@ -1,3 +1,5 @@
+const models = require('../models');
+
 module.exports = {
   Query: {
     /**
@@ -11,6 +13,18 @@ module.exports = {
      */
     me: async (root, args, context, info) => {
       return context.currentUser;
-    }
+    },
+
+    users: async (root, args, context, info) => {
+      return await models.User.findAll({
+        raw: true
+      });
+    },
+
+    user: async (root, args, context, info) => {
+      return await models.User.findByPk(args.id, {
+        raw: true
+      });
+    },
   }
 };
