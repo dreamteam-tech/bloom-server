@@ -7,9 +7,14 @@ const models = require('../models');
 module.exports = {
   Query: {
     transactions: async (root, args, context, info) => {
-      let where = {
-        user_id: context.currentUser.id
-      };
+      let where = {};
+
+      if (!context.currentUser.is_admin) {
+        where = {
+          ...where,
+          user_id: context.currentUser.id
+        };
+      }
 
       if (args.strategy_id) {
         where = {
