@@ -140,6 +140,7 @@ module.exports = {
           last_name: value.last_name,
           vk_id: value.vk_id,
           is_active: true,
+          refresh_token: utils.signRefreshToken(user)
         });
       }
 
