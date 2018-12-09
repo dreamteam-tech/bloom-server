@@ -1,17 +1,21 @@
 const Joi = require('joi');
 const { JoiError } = require('../errors');
 const utils = require('../utils');
+const chartService = require('../service/chart');
 const models = require('../models');
 
 module.exports = {
   Query: {
     transactions: async (root, args, context, info) => {
       let where = {
-        // user_id: context.currentUser.id
+        user_id: context.currentUser.id
       };
 
       if (args.strategy_id) {
-        where = { strategy_id: args.strategy_id };
+        where = {
+          ...where,
+          strategy_id: args.strategy_id
+        };
       }
 
       return await models.Transaction.findAll({
@@ -21,45 +25,17 @@ module.exports = {
       });
     },
     transaction: async (root, args, context, info) => {
-      return await models.Transaction.findByPk(args.id);
+      return await models.Transaction.findOne({
+        where: {
+          id: args.id,
+          user_id: context.currentUser.id
+        }
+      });
     },
     transactionChart: async (root, args, context, info) => {
-      const chartUserSqlQuery = `
-        select to_char(d, 'YYYY-MM') as date, COALESCE(sum("b"."amount"), 0) as value
-        from generate_series(date('now') - interval '1 year', date('now'), interval '1 day') d
-               left join lateral (
-            select "b"."amount"
-            from "transaction" "b"
-            where
-              date("b"."created_at") = d
-              and "b"."user_id" = :user_id
-              and "b"."strategy_id" = :strategy_id
-            group by "b"."amount"
-            ) b ON true
-        group by date
-        order by date;
-      `;
-      const chartSqlQuery = `
-        select to_char(d, 'YYYY-MM') as date, COALESCE(sum("b"."amount"), 0) as value
-        from generate_series(date('now') - interval '1 year', date('now'), interval '1 day') d
-               left join lateral (
-            select "b"."amount"
-            from "transaction" "b"
-            where
-              date("b"."created_at") = d
-              and "b"."strategy_id" = :strategy_id
-            group by "b"."amount"
-            ) b ON true
-        group by date
-        order by date;
-      `;
-
-      return models.sequelize.query(chartSqlQuery, {
-        type: models.sequelize.QueryTypes.SELECT,
-        replacements: {
-          // user_id: context.currentUser.id,
-          strategy_id: args.strategy_id
-        }
+      return await chartService.getChart({
+        user_id: context.currentUser.id,
+        strategy_id: args.strategy_id
       });
     }
   },

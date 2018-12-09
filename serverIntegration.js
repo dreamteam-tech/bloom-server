@@ -32,7 +32,11 @@ app.post('/vk', async (req, res) => {
       if (null === strategy) {
         return res.send('fail');
       }
+      const user = await models.User.findOne({
+        where: { vk_id: req.body.object.from_id }
+      });
       await models.Transaction.create({
+        user_id: user.id,
         strategy_id: strategy.id,
         amount: req.body.object.amount / 1000
       });
