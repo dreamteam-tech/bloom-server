@@ -8,7 +8,8 @@ module.exports = {
       const result = [];
 
       const strategies = await models.Strategy.findAll({
-        raw: true
+        raw: true,
+        order: [['position', 'ASC']]
       });
       for (let i = 0; i < strategies.length; i++) {
         const strategy = strategies[i];
