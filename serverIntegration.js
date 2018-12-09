@@ -29,6 +29,9 @@ app.post('/vk', async (req, res) => {
       // description — комментарий к переводу;
       // date — время отправки перевода в Unixtime.
       const strategy = await models.Strategy.findByPk(req.body.object.description);
+      if (null === strategy) {
+        return res.send('fail');
+      }
       await models.Transaction.create({
         strategy_id: strategy.id,
         amount: req.body.object.amount / 1000
