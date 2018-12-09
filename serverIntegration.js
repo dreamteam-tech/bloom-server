@@ -33,7 +33,7 @@ app.post('/vk', async (req, res) => {
         strategy_id: strategy.id,
         amount: req.body.object.amount / 1000
       });
-      return res.send('');
+      return res.send('ok');
 
     default:
       return res.send('fail');
