@@ -8,7 +8,7 @@ module.exports = {
     strategies: async (root, args, context, info) => {
       const strategies = await models.Strategy.findAll({
         raw: true,
-        order: [['id', 'DESC']]
+        order: [['position', 'ASC']]
       });
 
       const result = [];
