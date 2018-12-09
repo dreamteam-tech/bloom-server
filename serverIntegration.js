@@ -15,18 +15,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/vk', async (req, res) => {
-  const {
-    type,
-    group_id
-  } = req.body;
-
   console.log({ body: req.body });
 
-  if (type === 'confirmation' && String(group_id) === '175055996') {
-    return res.send('77f9b735');
-  }
+  switch (req.body.type) {
+    case 'confirmation':
+      return String(req.body.group_id) === '175055996' ? res.send('77f9b735') : res.send('fail');
 
-  return res.send('fail');
+    case 'vkpay_transaction':
+      // Объект, содержащий поля:
+      // from_id — идентификатор пользователя-отправителя перевода;
+      // amount — сумма перевода в тысячных рубля;
+      // description — комментарий к переводу;
+      // date — время отправки перевода в Unixtime.
+      const strategy = await models.Strategy.findByPk(req.body.object.description);
+      await models.Transaction.create({
+        strategy_id: strategy.id,
+        amount: req.body.object.amount
+      });
+      return res.send('');
+
+    default:
+      return res.send('fail');
+  }
 });
 
 app.listen(appConfig.portIntegration, () => {
