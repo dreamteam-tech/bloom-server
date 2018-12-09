@@ -15,7 +15,7 @@ module.exports = {
              left join lateral (
           select "b"."amount"
           from "transaction" "b"
-          where date("b"."created_at") <= d and "b"."strategy_id" = :strategy_id
+          where date("b"."created_at") = d and "b"."strategy_id" = :strategy_id
           group by "b"."amount"
           ) b ON true
       group by date
