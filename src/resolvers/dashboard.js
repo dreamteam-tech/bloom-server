@@ -32,6 +32,12 @@ module.exports = {
       });
       for (let i = 0; i < strategies.length; i++) {
         const strategy = strategies[i];
+        const balance = await models.Transaction.sum('amount', {
+          where: {
+            user_id: context.currentUser.id,
+            strategy_id: strategy.id
+          }
+        }) || 0;
         const amount = await models.Transaction.sum('amount', {
           where: {
             type: { [Op.not]: consts.TRANSACTION_WITHDRAW },
@@ -49,15 +55,18 @@ module.exports = {
 
         const percent = calc(amount, invested);
 
+        const chart = await chartService.getSummaryChart({
+          user_id: context.currentUser.id,
+          strategy_id: strategy.id
+        });
+
         result.push({
           strategy,
           amount,
+          balance,
           percent,
           invested,
-          chart: await chartService.getSummaryChart({
-            user_id: context.currentUser.id,
-            strategy_id: strategy.id
-          })
+          chart
         });
       }
 

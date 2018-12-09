@@ -5,6 +5,7 @@ module.exports = gql`
     invested: Float!
     amount: Float!
     percent: Float!
+    balance: Float!
     strategy: Strategy!
     chart: [ChartLine!]
   }
