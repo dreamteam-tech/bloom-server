@@ -1,5 +1,6 @@
 const BigNumber = require('bignumber.js');
 const models = require('../models');
+const { Op } = require('sequelize');
 const consts = require('../consts');
 const chartService = require('../service/chart');
 
